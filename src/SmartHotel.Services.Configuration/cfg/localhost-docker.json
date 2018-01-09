@@ -1,12 +1,12 @@
 ﻿{
   "urls": {
-    "hotels": "http://localhost:6101",
-    "bookings": "http://localhost:6100",
-    "suggestions": "http://localhost:6102",
-    "tasks": "http://localhost:6104",
-    "notifications": "http://localhost:6105",
-    "reviews": "http://localhost:61016",
-    "discounts": "http://localhost:6107",
+    "hotels": "http://localhost:6101/",
+    "bookings": "http://localhost:6100/",
+    "suggestions": "http://localhost:6102/",
+    "tasks": "http://localhost:6104/",
+    "notifications": "http://localhost:6105/",
+    "reviews": "http://localhost:61016/",
+    "discounts": "http://localhost:6107/",
     "images_base": "https://sh360imgdev.blob.core.windows.net/"
   },
   "pets_config": {
