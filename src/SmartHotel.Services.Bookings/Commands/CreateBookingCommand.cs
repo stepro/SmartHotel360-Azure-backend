@@ -24,7 +24,7 @@ namespace SmartHotel.Services.Bookings.Commands
 
     public class CreateBookingCommand
     {
-        private readonly BookingRepository _bookingRepostiory;
+        private readonly BookingRepository _bookingRepository;
         private readonly UnitOfWork _uow;
 
         public CreateBookingCommand(
@@ -32,7 +32,7 @@ namespace SmartHotel.Services.Bookings.Commands
             UnitOfWork uow
             )
         {
-            _bookingRepostiory = bookingRepostiory;
+            _bookingRepository = bookingRepostiory;
             _uow = uow;
         }
 
@@ -51,7 +51,7 @@ namespace SmartHotel.Services.Bookings.Commands
                 IdRoomType = bookingRequest.RoomType 
             };
 
-            _bookingRepostiory.Add(booking);
+            _bookingRepository.Add(booking);
             await _uow.SaveChangesAsync();
             return true;
         }
