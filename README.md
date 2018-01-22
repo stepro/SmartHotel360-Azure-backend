@@ -26,7 +26,7 @@ In production all these microservices run in a Kubernetes cluster, powered by Az
 
 ## Prerequisites
 
-All of the back-end systems run inside of Docker containers. To build locally and see how things work the only requirement is that you install install [Docker](https://www.docker.com/). 
+All of the back-end systems run inside of Docker containers. To build locally and see how things work the only requirement is that you install [Docker](https://www.docker.com/). 
 
 During the installation phase you will notice errors if you haven't set your Docker configuration to use 4 GB of memory. Changing this is simple within the Docker configuration dialog. Just set the memory higher and restart Docker. 
 
@@ -96,7 +96,7 @@ The terminal window will show all of the containers running. Take note of the po
 
 ![Container ports](docs/containers-and-ports.png)
 
-Each of these ports redirects to port 80 within the container image. Most of these microservices expose an [Open API Specification](https://www.openapis.org/) (formerly known as Swagger) endpoint that describes the back-end REST APIs. To verify the APIs are up and running, use any of the ports in this list to browse the API description page for each of the microservices. 
+Each of these ports redirects to port `80` within the container image. Most of these microservices expose an [Open API Specification](https://www.openapis.org/) (formerly known as Swagger) endpoint that describes the back-end REST APIs. To verify the APIs are up and running, use any of the ports in this list to browse the API description page for each of the microservices. 
 
 > Note: not all of these URLs will result with a Swagger-UI test page, but they all should resolve once the microservices are all running. 
 
@@ -111,6 +111,7 @@ Each of these ports redirects to port 80 within the container image. Most of the
 |Hotels|[http://localhost:6101](http://localhost:6101)|
 |Profiles|[http://localhost:6108](http://localhost:6108)|
 |Suggestions|[http://localhost:6102](http://localhost:6102)|
+
 ## More info
 
 * [Architecture of SmartHotel360](./docs/architecture.md)
