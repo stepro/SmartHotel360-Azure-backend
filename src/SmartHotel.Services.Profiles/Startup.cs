@@ -72,8 +72,8 @@ namespace SmartHotel.Services.Profiles
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                var prefix = string.IsNullOrEmpty(pbase) ? "" : $"{pbase}/";
-                c.SwaggerEndpoint($"{prefix}swagger/v1/swagger.json", "Profiles Api");
+                var path = string.IsNullOrEmpty(pbase) || pbase == "/" ? "/" : $"{pbase}/";
+                c.SwaggerEndpoint($"{path}swagger/v1/swagger.json", "Profiles Api");
 
             });
 

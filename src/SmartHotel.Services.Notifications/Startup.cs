@@ -106,8 +106,7 @@ namespace SmartHotels.Services.Notifications
                 var b2cConfig = Configuration.GetSection("b2c");
                 var path = string.IsNullOrEmpty(pbase) || pbase == "/" ? "/" : $"{pbase}/";
                 c.InjectOnCompleteJavaScript($"{path}swagger-ui-b2c.js");
-                var prefix = string.IsNullOrEmpty(pbase) ? "" : $"{pbase}/";
-                c.SwaggerEndpoint($"{prefix}swagger/v1/swagger.json", "Notifications Api");
+                c.SwaggerEndpoint($"{path}swagger/v1/swagger.json", "Notifications Api");
                 c.ConfigureOAuth2(b2cConfig["ClientId"], "y", "z", "z", "",
                     new
                     {

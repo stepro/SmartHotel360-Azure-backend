@@ -72,8 +72,8 @@ namespace SmartHotel.Services.Discount
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                var prefix = string.IsNullOrEmpty(pbase) ? "" : $"{pbase}/";
-                c.SwaggerEndpoint($"{prefix}swagger/v1/swagger.json", "Discunts Api");
+                var path = string.IsNullOrEmpty(pbase) || pbase == "/" ? "/" : $"{pbase}/";
+                c.SwaggerEndpoint($"{path}swagger/v1/swagger.json", "Discounts Api");
             });
 
             app.UseMvc();
