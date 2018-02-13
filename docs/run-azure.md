@@ -4,12 +4,12 @@
 
 ## Creating the Kubernetes cluster
 
-The first step is to create the Kubernetes cluster using ACS. For this you must run the `gen-k8s-env.ps1` file from a Powershell window. This script accept various parameters:
+The first step is to create the Kubernetes cluster using AKS. For this you must run the `gen-k8s-env.ps1` file from a Powershell window. This script accept various parameters:
 
 * `resourceGroupName`: Resource group name where to deploy the Kubernetes cluster
 * `location`: Resource group location
 * `registryName` (optional): ACR to create. Only needed if `createAcr` is `$true`.
-* `orchestratorName`: Name of the ACS resource
+* `orchestratorName`: Name of the AKS resource
 * `dnsName`: DNS name of the main machine of the orchestrator. **This is not the DNS name used to access the services**.
 * `createAcr`: If ACR has to be created or not (default value is `$true`)
 * `createRg`: If `$true` the resource group is created.
