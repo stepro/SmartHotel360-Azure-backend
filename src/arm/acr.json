@@ -3,34 +3,34 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "registryName": {
-            "type": "String",
+            "type": "string",
             "metadata": {
                 "description": "The name of the container registry."
             }
         },
         "registryLocation": {
-            "type": "String",
+            "type": "string",
             "metadata": {
                 "description": "The location of the container registry. This cannot be changed after the resource is created."
             }
         },
         "registrySku": {
             "defaultValue": "Standard",
-            "type": "String",
+            "type": "string",
             "metadata": {
                 "description": "The SKU of the container registry."
             }
         },
         "registryApiVersion": {
             "defaultValue": "2017-10-01",
-            "type": "String",
+            "type": "string",
             "metadata": {
                 "description": "The API version of the container registry."
             }
         },
         "adminUserEnabled": {
             "defaultValue": false,
-            "type": "Bool",
+            "type": "bool",
             "metadata": {
                 "description": "The value that indicates whether the admin user is enabled."
             }
@@ -43,7 +43,7 @@
                 "name": "[parameters('registrySku')]"
             },
             "name": "[parameters('registryName')]",
-            "apiVersion": "[parameters('registryApiVersion')]",
+            "apiVersion": "2017-10-01",
             "location": "[parameters('registryLocation')]",
             "properties": {
                 "adminUserEnabled": "[parameters('adminUserEnabled')]"
