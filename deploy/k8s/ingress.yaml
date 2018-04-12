@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: sh360
+    component: frontend
+  name: sh360-ingress
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"  
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"  
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /hotels-api
+        backend:
+          serviceName: hotels
+          servicePort: 80
+      - path: /bookings-api
+        backend:
+          serviceName: bookings
+          servicePort: 80
+      - path: /suggestions-api
+        backend:
+          serviceName: suggestions
+          servicePort: 80
+      - path: /configuration-api 
+        backend:
+          serviceName: configuration-api
+          servicePort: 80          
+      - path: /tasks-api
+        backend:
+          serviceName: tasks
+          servicePort: 80
+      - path: /notifications-api
+        backend:
+          serviceName: notifications
+          servicePort: 80          
+      - path: /reviews-api
+        backend:
+          serviceName: reviews
+          servicePort: 80
+      - path: /discounts-api
+        backend:
+          serviceName: discounts
+          servicePort: 80
+      - path: /profiles-api
+        backend:
+          serviceName: profiles
+          servicePort: 80                            
