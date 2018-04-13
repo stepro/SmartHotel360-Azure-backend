@@ -10,6 +10,8 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"  
 spec:
   rules:
+#  - host: YOUR_DNS_NAME
+#    http:
   - http:
       paths:
       - path: /hotels-api
@@ -48,3 +50,7 @@ spec:
         backend:
           serviceName: profiles
           servicePort: 80                            
+#  tls:
+#  - secretName: mysh360-cert-tls
+#    hosts: 
+#      - YOUR_DNS_NAME
