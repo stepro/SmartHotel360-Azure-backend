@@ -199,6 +199,14 @@ spec:
           value: Development                
         ports:
         - containerPort: 80
+        volumeMounts:
+        - name: customcfg
+          mountPath: /app/cfg/custom.json
+          subPath: custom.json
+      volumes:
+      - name: customcfg
+        configMap:
+          name: discovery-file
       imagePullSecrets:
       - name: registry-key
 ---

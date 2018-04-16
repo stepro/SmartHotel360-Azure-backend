@@ -7,11 +7,10 @@ Param(
     [parameter(Mandatory=$false)][string]$kubeconfigPath,
     [parameter(Mandatory=$false)][string]$imageTag,
     [parameter(Mandatory=$false)][bool]$deployCI=$false,
-    [parameter(Mandatory=$false)][bool]$useSSL=$false,
     [parameter(Mandatory=$false)][bool]$buildImages=$false,
     [parameter(Mandatory=$false)][bool]$pushImages=$false,
-    [parameter(Mandatory=$false)][string]$sslCertificate="",
     [parameter(Mandatory=$false)][bool]$deployInfrastructure=$false,
+    [parameter(Mandatory=$false)][string]$discoveryServiceFile="",
     [parameter(Mandatory=$false)][string]$dockerOrg="smarthotels"
 )
 
@@ -43,11 +42,6 @@ Write-Host "Ingress ip detected: $externalDns" -ForegroundColor Yellow
 if (-not [bool]($externalDns -as [ipaddress])) {
     Write-Host "Must install ingress first" -ForegroundColor Red
     Write-Host "Run deploy-ingress.ps1 and  deploy-ingress-azure.ps1." -ForegroundColor Red
-    exit
-}
-
-if ($useSSL -eq $true -and [String]::IsNullOrEmpty($sslCertificate)) {
-    Write-Host "If useSSL is true then sslCertificate MUST be the name of certificate file (no extension)" -ForegroundColor Red
     exit
 }
 
@@ -125,8 +119,7 @@ if ($deployInfrastructure) {
 }
 ExecKube -cmd 'delete configmap config-files'
 ExecKube -cmd 'delete configmap externalcfg'
-ExecKube -cmd 'delete configmap ssl-files'
-
+ExecKube -cmd 'delete configmap discovery-file'
 
 if ($deployInfrastructure) {
     Write-Host 'Deploying infrastructure deployments'  -ForegroundColor Yellow
@@ -134,26 +127,20 @@ if ($deployInfrastructure) {
 }
 
 
-if ($useSSL) {
-    ExecKube -cmd 'create configmap config-files --from-file=nginx-conf=nginx-ssl.conf --from-file=self-signed.conf=certs-nginx/self-signed.conf --from-file=ssl-params.conf=certs-nginx/ssl-params.conf'
-}
-else {
-    ExecKube -cmd 'create configmap config-files --from-file=nginx-conf=nginx.conf'
-}
-
+ExecKube -cmd 'create configmap config-files --from-file=nginx-conf=nginx.conf'
 ExecKube -cmd 'label configmap config-files app=smarthotels'
 
-if ($useSSL) {
-    Write-Host "Mounting certificate files for SSL... " -ForegroundColor Yellow
-    ExecKube -cmd "create configmap ssl-files --from-file=dev.crt=certs-nginx/$sslCertificate.crt --from-file=dhparam.pem=certs-nginx/dhparam.pem --from-file=dev.key=certs-nginx/$sslCertificate.key"
-    ExecKube -cmd 'label configmap ssl-files app=smarthotels'
+if (-not [string]::IsNullOrEmpty($discoveryServiceFile)) {
+    Write-Host "Creating discovery service file from $discoveryServiceFile" -ForegroundColor Yellow
+    ExecKube -cmd "create configmap discovery-file --from-file=custom.json=$discoveryServiceFile"
 }
-
+else {
+    Write-Host "Creating empty discovery service file from $discoveryServiceFile. This is not an error!" -ForegroundColor Yellow
+    ExecKube -cmd "create configmap discovery-file --from-file=custom.json=empty.json"
+}
 
 Write-Host 'Deploying WebAPIs' -ForegroundColor Yellow
 ExecKube -cmd 'create -f services.yaml'
-
-
 
 Write-Host "Deploying configuration from $configFile" -ForegroundColor Yellow
 

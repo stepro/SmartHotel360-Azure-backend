@@ -24,4 +24,4 @@ If you don't want to create resource group could use:
 .\gen-k8s-env.ps1 --resourceGroupName k8sdev --orchestratorName sh360k8sdev --dnsName sh360k8sdev --registryName sh360acrdev --createRg $false
 ```
 
-
+Once you have a AKS create follow [these instructions](./deploy.md) to deploy all microservices on it.
