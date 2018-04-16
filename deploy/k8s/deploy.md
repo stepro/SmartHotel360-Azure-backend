@@ -53,7 +53,6 @@ For deploying microservices in a AKS, images must be in a Docker repository. It 
 * `deployInfrastructure`: If `$true` sql & postgres containers are deployed (defaults to  `$false`)
 * `buildImages`: If `$true` Docker Images are built (defaults to `$false`)
 * `pushImages`: If `$true` Docker Images are push onto registry (defaults to `$false`)
-* `useSSL`: **NOT IMPLEMENTED YET** If `$true` TLS is configured in cluster.
 * `configFile`: Configuration file to use (connection strings and so on)
 
 For creating a valid `configFile` just edit the  `conf_local.yml` file and add your desired values to the keys. **Note**: If you used `$deployInfrastructure` to `$true`, then use `conf_all.yml` as a value for `configFile` (the file `conf_all.yml` contains everything configured to use the container databases).
