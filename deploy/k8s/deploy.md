@@ -34,17 +34,21 @@ sh360-ingress   *                   80        2m
 sh360-ingress   *         a.b.c.d   80        4m
 ```
 
-Now you can cancel the command (`Ctrl+C`): The `a.b.c.d` is the public ip assigned to your cluster. It won't change.
+Now you can cancel the command (`Ctrl+C`): The `a.b.c.d` is the public ip assigned to your cluster. **It won't change** so write down for future reference.
+
+>**Note** You can always get the public ip by command `kubectl get ing sh360-ingress`
 
 ## Deploy microservices
 
-The `deploy.ps1` file is used to deploy the microservices. This file deletes all cluster content and deploy all microservices (no selective deployment is supported, although you can do it by using custom scripts or using kubectl directly).
+The `deploy.ps1` file is used to deploy the microservices. This file deletes all cluster content (except _ingress_ and _ingress controller_) and deploy all microservices (**no selective deployment is supported yet**, although you can do it by using custom scripts or using kubectl directly).
 
-For deploying microservices in a AKS, images must be in a Docker repository. It can be DockerHub or ACR and the images can be public or private. Let's assume you have the images in a ACR called my-acr. Then the command to deploy everything is:
+**For deploying microservices in a k8s, images must be in a Docker repository**. It can be DockerHub or ACR and the images can be public or private. Let's assume you have the images in a ACR called `my-acr`. Then the command to deploy everything is:
 
 ```
 .\deploy.ps1 -configFile .\conf_all.yml -dockerUser <your-docker-user> -dockerPassword <your-docker-password> -registry <docker-registry> -imageTag latest -deployInfrastructure $true -buildImages $false -dockerOrg <your-docker-org> -pushImages $false
 ```
+
+> **Note** If you don't use organizations in your repository pass an empty string to `dockerOrg` parameter (`-dockerOrg ''`).
 
 * `dockerUser`: Docker user (for private repos OR if images are pushed)
 * `dockerPassword`: Docker password (for private repos OR if images are pushed)
@@ -54,12 +58,15 @@ For deploying microservices in a AKS, images must be in a Docker repository. It 
 * `buildImages`: If `$true` Docker Images are built (defaults to `$false`)
 * `pushImages`: If `$true` Docker Images are push onto registry (defaults to `$false`)
 * `configFile`: Configuration file to use (connection strings and so on)
+* `dockerOrg`: Organization where images are (defaults to `smarthotel360`). If you don't use organizations in your repository use an empty string `''`.
 
-For creating a valid `configFile` just edit the  `conf_local.yml` file and add your desired values to the keys. **Note**: If you used `$deployInfrastructure` to `$true`, then use `conf_all.yml` as a value for `configFile` (the file `conf_all.yml` contains everything configured to use the container databases).
+For creating a valid `configFile` just edit the  `conf_local.yml` file and add your desired values to the keys. 
+
+**Important Note**: If you used `$deployInfrastructure` to `$true`, then use `conf_all.yml` as a value for `configFile` (the file `conf_all.yml` contains everything configured to use the container databases).
 
 ## Add TLS support to Kubernetes Cluster
 
->**Pre-requisite** In Azure [set a DNS entry](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/portal-create-fqdn) to the public ip used by the cluster. This IP is located in the same resource group as the cluster is.
+>**Pre-requisite** _Ingress_ must be installed on the cluster. Also in Azure [set a DNS entry](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/portal-create-fqdn) to the public ip used by the cluster (the one returned by `kubectl get ing sh360-ing`). This IP is located in the same resource group as the cluster is.
 
 TLS support is provided through [cert-manager](https://github.com/jetstack/cert-manager/). You **can use [helm](https://helm.sh/)** to install cer-manager. To install helm:
 
@@ -84,11 +91,10 @@ The `http01` enables use of HTTP-01 challenge (another option of cert-manager is
 
 ### Creating the certificate
 
-Open (end edit if needed) the `certificate.yml` file, as this is the base template.
+Open the `certificate.yml` file, as this is the base template. **You will need to edit this file to provide needed values**:
 
-In `commonName` enter the **DNS name of your cluster** (DNS value assigned to public ip). In `dnsNames` can enter a list of [Subject Alternative Names](https://en.wikipedia.org/wiki/Subject_Alternative_Name).
-
-The `acme` section is the section that specifies the configuration for responding the ACME challenges. **To verify the ownership of every entry in `http01` cert-manager will create a _pod_ (exposed through _ingress_) that will serve the requested file**. In the `domains:` list you must enter all domains needed to be validated.
+* In `commonName` enter the **DNS name of your cluster** (DNS value assigned to public ip). In `dnsNames` can enter a list of [Subject Alternative Names](https://en.wikipedia.org/wiki/Subject_Alternative_Name).
+* The `acme` section is the section that specifies the configuration for responding the ACME challenges. **To verify the ownership of every entry in `http01` cert-manager will create a _pod_ (exposed through _ingress_) that will serve the requested file**. In the `domains:` list you must enter all domains needed to be validated.
 
 ### Sample files
 
@@ -165,6 +171,7 @@ Also, at the end of file there is a block of commented code:
 **Uncomment all these lines**. Finally use `kubectl apply -f ingress.yaml` to deploy this changes to _ingress_ resource.
 
 Now the certificate is set. If you use https://YOUR-DNS-NAME you will receive an invalid certificate from the organization `Fake LE Intermediate X1`: this is the staging Let's Encrypt organization!
+### Switch to real TLS certificate
 
 To sign with a real certificate only three steps are needed:
 
