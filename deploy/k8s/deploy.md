@@ -159,6 +159,14 @@ Most relevant sections are:
 * `b2c`: Need to provide your AAD B2C configuration if using a custom AAD B2C
   *  `client` is the ID of the "Public Web" in your AAD B2C
 
+ You need to update:
+
+* The `urls` section with the urls of your services.
+* The `pets_config` section (only if you want to recreate the bring your pet demo on local)
+* The `b2c` section (if using your AAD B2C)
+
+> **Note** The bring your pet demo is included in the [Public Web repository][https://github.com/Microsoft/SmartHotel360-public-web/]. Is the public web which contains the deployment scripts for the pets demo. You need an Azure Function, Storage, CosmosDB and Vision API to run it. For more info please go to the [instructions in the public web repo](https://github.com/Microsoft/SmartHotel360-public-web/blob/master/doc/pet-demo.md).
+
 ## Next steps
 
 1. [Configure TLS on the cluster](./deploy-ssl.md) (if needed)
