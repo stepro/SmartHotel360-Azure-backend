@@ -18,6 +18,8 @@ docker-compose -f docker-compose-tagged.yml -f docker-compose.override.yml up
 
 This will start all other APIs.
 
+>**Note** Those images are configured to use the public Azure environment provided by Microsoft.
+
 ## From your own images
 
 The first step to run all services is build the docker images by typing `docker-compose build`. This will use Docker to compile all code and generate the Docker images (you don't need to have installed any SDK). The process could take some time.

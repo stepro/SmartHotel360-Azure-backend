@@ -2,11 +2,10 @@
 
 > **Note** All tasks must be performed from the `/deploy/k8s` folder. Also you need the [Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) installed on your system.
 
-## Creating the Kubernetes cluster
+## Creating the Kubernetes cluster and deploy Microservices on it
 
-To create the AKS cluster run the `/deploy/k8s/gen-k8s-env.ps1` script from a Powershell window.
-
-Read the [documentation here](../deploy/k8s/readme.md) for details.
+1. To create the AKS cluster run the `/deploy/k8s/gen-k8s-env.ps1` script from a Powershell window. **Read the [documentation here](../deploy/k8s/readme.md) for details**.
+2. To deploy Microservices on the k8s cluster you have to use `/deploy/k8s/deploy.ps1` from a Powershell window. **Read the [step by step here](../deploy/k8s/deploy.md)**.
 
 ## Creating all Azure resources
 
@@ -26,38 +25,7 @@ This will create a set of resources like following ones:
 
 ![azure resources](./azure-rg.png)
 
-## Deploying services on the K8s cluster
 
-To deploy microservices on AKS need to:
-
-* Create _ingress_ resource
-* Configure SSL (if needed)
-* Deploy Docker images
-
-[Here are the detailed instructions](../deploy/k8s/deploy.md) on how do it.
-
-
-Once run you can check everything is installed by typing `kubectl get services`. The answer should be like:
-
-```
-NAME            CLUSTER-IP     EXTERNAL-IP    PORT(S)                      AGE
-bookings        10.0.72.109    <none>         80/TCP                       18h
-config          10.0.159.143   <none>         80/TCP                       18h
-discounts       10.0.46.77     <none>         80/TCP                       18h
-hotels          10.0.42.187    <none>         80/TCP                       18h
-kubernetes      10.0.0.1       <none>         443/TCP                      7d
-notifications   10.0.228.103   <none>         80/TCP                       18h
-profiles        10.0.229.70    <none>         80/TCP                       18h
-reviews         10.0.213.186   <none>         80/TCP                       18h
-suggestions     10.0.156.59    <none>         80/TCP                       18h
-tasks           10.0.68.136    <none>         80/TCP                       18h
-```
-
-## Configuration files
-
-The `-configFile` parameter sets the configuration file to configure all the services on the cluster. The `/deploy/k8s/conf_local.yml` is a sample of this configuration file. All entries are mandatory, and you can retrieve its values from the Azure portal.
-
-> **Note**: The AAD B2C values that are in the file are only valid for the services hosted in the public endpoint. You can leave as it if you don't want to use B2C. If you want to use your own B2C you need to update those values.
 
 # The configuration service
 

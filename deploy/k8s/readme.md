@@ -33,4 +33,7 @@ If you want to deploy also an ACR just add the `registryName` parameter:
  .\gen-aks-env.ps1  -resourceGroupName k8sdev -orchestratorName k8s-aks -registryName k8sdevacr
 ```
 
-Once you have a k8s cluster (ACS or AKS) created follow [these instructions](./deploy.md) to deploy all microservices on it.
+## Next steps
+
+* Once you have a k8s cluster (ACS or AKS) created follow [these instructions](./deploy.md) to deploy all microservices on it.
+* Read how to [deploy Azure services used by microservices](../../docs/run-azure.md)
