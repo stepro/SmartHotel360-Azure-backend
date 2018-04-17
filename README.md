@@ -117,7 +117,7 @@ Each of these ports redirects to port `80` within the container image. Most of t
 
 * [Architecture of SmartHotel360](./docs/architecture.md)
 * [Run services locally](./docs/run-locally.md)
-* [Deploy in Azure](./docs/run-azure.md)
+* [Deploy in Azure (using Kubernetes cluster)](./docs/run-azure.md)
 
 ## Contributing
 
