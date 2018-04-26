@@ -23,7 +23,8 @@ namespace SmartHotel.Services.Hotels.Controllers
         {
             var cities = string.IsNullOrEmpty(name) ? 
                 await _citiesQueries.GetDefaultCities() :
-                await _citiesQueries.Get(name);
+                _citiesQueries.GetDefaultCities().Result
+             .Where(city => city.Name.StartsWith(name));
             return Ok(cities);
         }
     }
