@@ -6,13 +6,13 @@ metadata:
     component: frontend
   name: sh360-ingress
   annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
     ingress.kubernetes.io/ssl-redirect: "false"  
     nginx.ingress.kubernetes.io/ssl-redirect: "false"  
 spec:
   rules:
-#  - host: YOUR_DNS_NAME
-#    http:
-  - http:
+  - host: sh360.<guid>.<region>.aksapp.io
+    http:
       paths:
       - path: /hotels-api
         backend:
