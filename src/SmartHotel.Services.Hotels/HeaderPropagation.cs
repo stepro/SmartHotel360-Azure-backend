@@ -16,7 +16,7 @@ using System.Net.Http;
 using System.Threading;
 using Microsoft.AspNetCore.Http;
 
-namespace SmartHotel_Services_Hotels
+namespace SmartHotel.Services.Hotels
 {
     public class HeaderPropagatingHttpClient : HttpClient
     {

@@ -1,0 +1,39 @@
+kind: helm-release
+apiVersion: 1.0
+build:
+  context: .
+  dockerfile: Dockerfile
+install:
+  chart: charts/promotions
+  values:
+  - values.dev.yaml?
+  - secrets.dev.yaml?
+  set:
+    image:
+      tag: $(tag)
+      pullPolicy: Never
+    # This ingress section specifies whether VSCE should expose
+    # an endpoint like http://promotions.<guid>.<region>.aksapp.io
+    # ingress:
+    #   enabled: true
+    #   hosts:
+    #   - $(spacePrefix)promotions$(domainSuffix)
+    #   annotations:
+    #     kubernetes.io/ingress.class: addon-http-application-routing
+configurations:
+  develop:
+    build:
+      useGitIgnore: true
+    container:
+      syncTarget: /app
+      sync:
+      - "!**/package.json"
+      iterate:
+        processesToKill: [node]
+  develop.attach:
+    build:
+      useGitIgnore: true
+    container:
+      syncTarget: /app
+      sync:
+      - "!**/package.json"

@@ -58,6 +58,14 @@ namespace SmartHotel.Services.Hotels.Controllers
             }
 
             var discount = 0.0d;
+            using (var client = new HeaderPropagatingHttpClient(this.Request))
+            {
+                var response = await client.GetAsync($"http://promotions/api/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    Double.TryParse(await response.Content.ReadAsStringAsync(), out discount);
+                }
+            }
             if (!string.IsNullOrEmpty(userId))
             {
                 discount = await _discountSvc.GetDiscountByCustomer(userId);
