@@ -3,7 +3,12 @@ var express = require('express');
 var app = express();
 
 app.get('/api/:id', function (req, res) {
-    res.status(200).send("0.05");
+    var id = parseInt(req.params.id);
+    if (!id) {
+        res.status(500).send("Error");
+    } else {
+        res.status(200).send("0.05");
+    }
 });
 
 var port = 80;
