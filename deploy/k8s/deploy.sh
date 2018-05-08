@@ -37,6 +37,7 @@ kubectl set image deployments/notifications notifications=${registry}/${dockerOr
 kubectl set image deployments/reviews reviews=${registry}/${dockerOrg}/reviews:$imageTag
 kubectl set image deployments/discounts discounts=${registry}/${dockerOrg}/discounts:$imageTag
 kubectl set image deployments/profiles profiles=${registry}/${dockerOrg}/profiles:$imageTag
+kubectl set image deployments/promotions promotions=${registry}/${dockerOrg}/promotions:$imageTag
 
 echo "Execute rollout..."
 kubectl rollout resume deployments/hotels
@@ -48,3 +49,4 @@ kubectl rollout resume deployments/notifications
 kubectl rollout resume deployments/reviews
 kubectl rollout resume deployments/discounts
 kubectl rollout resume deployments/profiles
+kubectl rollout resume deployments/promotions

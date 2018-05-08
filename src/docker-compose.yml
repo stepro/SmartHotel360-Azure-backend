@@ -55,6 +55,12 @@ services:
       context: ./SmartHotel.Services.Profiles
       dockerfile: Dockerfile
 
+  promotions-api:
+    image: smarthotels/promotions
+    build:
+      context: ./SmartHotel.Services.Promotions
+      dockerfile: Dockerfile
+
   sql-data:
     image: microsoft/mssql-server-linux:2017-GA
 

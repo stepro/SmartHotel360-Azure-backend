@@ -125,3 +125,17 @@ spec:
   selector:
     app: smarthotels
     component: profiles  
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: smarthotels
+    component: promotions
+  name: promotions
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: smarthotels
+    component: promotions

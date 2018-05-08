@@ -438,3 +438,25 @@ spec:
         - containerPort: 80      
       imagePullSecrets:
       - name: registry-key
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: promotions
+spec:
+  paused: true
+  template:
+    metadata:
+      labels:
+        app: smarthotels
+        component: promotions
+    spec:
+      containers:
+      - name: promotions
+        image: smarthotels/promotions
+        imagePullPolicy: Always
+        env:
+        ports:
+        - containerPort: 80      
+      imagePullSecrets:
+      - name: registry-key

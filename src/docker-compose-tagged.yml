@@ -25,9 +25,11 @@ services:
   discounts-api:
     image: smarthotels/discounts:public
 
-
   profiles-api:
     image: smarthotels/profiles:public
+
+  promotions-api:
+    image: smarthotels/promotions:public
 
 
   sql-data:

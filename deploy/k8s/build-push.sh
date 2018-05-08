@@ -11,7 +11,7 @@ export TAG=$imageTag
 docker-compose -p .. -f ../../src/docker-compose.yml -f ../../src/docker-compose-tagged.yml build
 
 echo "Pushing images to $registry/$dockerOrg..."
-services="bookings hotels suggestions tasks configuration notifications reviews discounts profiles"
+services="bookings hotels suggestions tasks configuration notifications reviews discounts profiles promotions"
 for service in $services; do
   imageFqdn=$registry/${dockerOrg}/${service}
   docker tag smarthotels/${service}:public ${imageFqdn}:$imageTag
